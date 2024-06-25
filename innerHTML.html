@@ -13,9 +13,22 @@
         <li></li>
     </ul>
 
-
     <script>
-        document.querySelector("body").innerHTML = "<li>您好<li>"
+        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://wikipedia.org')}`)
+            .then(response => {
+                if (response.ok) return response.json();
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                // 使用 DOMParser 解析 HTML 字符串
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.contents, 'text/html');
+                const title = doc.querySelector('title').innerText;
+                console.log('Page title:', title);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     </script>
 </body>
 
