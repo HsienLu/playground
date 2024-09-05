@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板</title>
+</head>
+<body>
+    <h1>留言板</h1>
+    <form onsubmit="postComment(); return false;">
+        <textarea id="comment" placeholder="Leave a comment"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="comments">
+        <h2>Comments:</h2>
+    </div>
+
+    <script>
+        function postComment() {
+            const comment = document.getElementById('comment').value;
+            const commentSection = document.getElementById('comments');
+            // 使用 eval 直接執行用戶輸入的 JavaScript 代碼
+            eval(comment);
+        }
+    </script>
+</body>
+</html>

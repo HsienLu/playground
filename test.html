@@ -16,81 +16,29 @@
     }
 </style>
 <body>
-    <div class="container">
-        <div class="row">
-          <div class="col">
-            <p>
-                1 of 2
-            </p>
-          </div>
-          <div class="col">
-           <p>
-            2 of 2
-           </p> 
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <p>1 of 3</p>
-            
-          </div>
-          <div class="col">
-            <p>2 of 3</p>
-            
-          </div>
-          <div class="col">
-            <p>3 of 3</p>
-            
-          </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <p>1</p>
-            </div>
-            <div class="col">
-                <p>2</p>
-            </div>
-            <div class="col">
-                <p>3</p>
-            </div>
-            <div class="col">
-                <p>4</p>
-            </div>
-            <div class="col">
-                <p>5</p>
-            </div>
-            <div class="col">
-                <p>6</p>
-            </div>
-            <div class="col">
-                <p>7</p>
-            </div>
-            <div class="col">
-                <p>8</p>
-            </div>
-            <div class="col">
-                <p>9</p>
-            </div>
-            <div class="col">
-                <p>10</p>
-            </div>
-            <div class="col">
-                <p>11</p>
-            </div>
-            <div class="col">
-                <p>12</p>
-            </div>
-        </div>
-      </div>
+    <form id="myForm">
+        <input type="text" id="myInput" name="myInput">
+        <button type="submit">提交</button>
+    </form>
+    
+    <script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        var input = document.getElementById('myInput').value;
+        var invalidChars = /<script>|<\/script>/gi;
+        
+        if (invalidChars.test(input)) {
+            alert("輸入內容包含不允許的字元！");
+            event.preventDefault(); // 阻止表單提交
+        }
+    });
+    </script>
 </body>
-<script>
-    const fetchData = () => {
-return fetch("https://randomuser.me/api/")
- .then((response) => response.json())
- .then((data) => console.log(data));}
-fetchData()
-</script>
-<script>
-alert("MOE_113CODE")
-</script>
 </html>
+
+// 防止 XSS script注入
+if(val.includes("<") || val.includes(">")){
+
+    val = val.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    writeMessage('<spring:message code="teacher.run.editrun.mustSpecifyTitle"/>');
+    return;
+}
