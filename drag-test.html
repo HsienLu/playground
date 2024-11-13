@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .blueBox{
+            width: 200px;
+            height: 200px;
+            background: blue;
+        }
+        .placeArea1{
+            width: 500px;
+            height: 500px;
+            border: 1px solid red;
+            margin-top: 3rem;
+        }
+        .placeArea2{
+            width: 500px;
+            height: 500px;
+            border: 1px solid green;
+            margin-top: 3rem;
+        }
+        .group{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="blueBox" id="draggable-item" draggable="true"></div>
+    <div class="group">
+
+        <div class="placeArea1" id="placeArea1"></div>
+        <div class="placeArea2" id="placeArea2"></div>
+    </div>
+    <script>
+        const draggableItem=document.querySelector('#draggable-item')
+        const area1=document.querySelector('#placeArea1')
+        const area2=document.querySelector('#placeArea2')
+        draggableItem.addEventListener('dragstart',(e)=>{
+            event.dataTransfer.effectAllowed = "copyMove"
+            e.dataTransfer.setData('text/plain',e.target.id)            
+        })
+        area1.addEventListener('dragover',e=>{
+            
+            e.preventDefault();
+            // event.dataTransfer.dropEffect = "copy"
+        })
+        area2.addEventListener('dragover',e=>{
+            e.preventDefault();
+        })
+        area1.addEventListener('drop',e=>{
+           const itemId= e.dataTransfer.getData('text/plain')
+           console.log(itemId)
+           const dragItem=document.querySelector(`#${itemId}`)
+           console.log(e)
+        //    const copy = draggedElement.cloneNode(true)
+           e.target.appendChild(dragItem.cloneNode(true))
+        })
+        area2.addEventListener('drop',e=>{
+            const itemId=e.dataTransfer.getData('text/plain')
+            const dragItem=document.querySelector(`#${itemId}`)
+            e.target.appendChild(dragItem)
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    color: #333;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #e3e3e3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    cursor: pointer;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.cell:hover {
+    background-color: #d0d0d0;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+}
+
+    </style>
+</head>
+<body>
+    <h1>井字遊戲</h1>
+    <div class="game-board" id="gameBoard">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
+    <button id="resetButton">重置遊戲</button>
+
+    <script>
+        // script.js
+const cells = document.querySelectorAll('.cell');
+const gameBoard = document.getElementById('gameBoard');
+const resetButton = document.getElementById('resetButton');
+let currentPlayer = 'X';
+let boardState = Array(9).fill(null);
+
+// 可能的勝利組合
+const winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+];
+
+// 點擊格子
+function handleCellClick(event) {
+    const cell = event.target;
+    const index = cell.getAttribute('data-index');
+
+    if (boardState[index] || checkWinner()) return; // 如果格子已填或遊戲已結束
+
+    boardState[index] = currentPlayer;
+    cell.textContent = currentPlayer;
+
+    if (checkWinner()) {
+        alert(`${currentPlayer} 勝利！`);
+    } else if (boardState.every(cell => cell)) {
+        alert("平手！");
+    } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; // 切換玩家
+    }
+}
+
+// 檢查勝利條件
+function checkWinner() {
+    return winningCombinations.some(combination => {
+        const [a, b, c] = combination;
+        return boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c];
+    });
+}
+
+// 重置遊戲
+function resetGame() {
+    boardState.fill(null);
+    cells.forEach(cell => (cell.textContent = ""));
+    currentPlayer = 'X';
+}
+
+// 事件監聽
+cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+resetButton.addEventListener('click', resetGame);
+
+    </script>
+</body>
+</html>
